@@ -8,9 +8,9 @@ const ForecastPredict = ({data}) => {
             {
                 data && data.length > 0 ? 
 
-                data.map((data, idx) => (
+                data.map((data, index) => (
 
-                    idx !== 0 &&  <ForecastPredictItem key={idx} forecastItem={data}/>
+                    index !== 0 &&  <ForecastPredictItem key={index} futureForecast={data}/>
                 ))
 
                 :
@@ -21,21 +21,21 @@ const ForecastPredict = ({data}) => {
     )
 }
 
-const ForecastPredictItem = ({forecastItem}) => {
-    const img = {uri: "http://openweathermap.org/img/wn/"+forecastItem.weather[0].icon+"@2x.png"}
+const ForecastPredictItem = ({futureForecast}) => {
+    const img = {uri: "http://openweathermap.org/img/wn/"+futureForecast.weather[0].icon+"@2x.png"}
     return (
         <View style={styles.forecastPredictItemContainer}>
-            <Text style={styles.day}>{moment(forecastItem.dt * 1000).format('ddd')}</Text>
-            <Image style={styles.image} source={img}/>
-            <Text style={styles.temp}>Night - {forecastItem.temp.night}&#176;C</Text>
-            <Text style={styles.temp}>Day - {forecastItem.temp.day}&#176;C</Text>
-            <Text style={styles.temp}>{forecastItem.weather[0].description}</Text>
+            <Text style={styles.day}>{moment(futureForecast.dt * 1000).format('ddd')}</Text>
+            <Image style={styles.icons} source={img}/>
+            <Text style={styles.temperature}>Night : {futureForecast.temp.night}&#176;C</Text>
+            <Text style={styles.temperature}>Day : {futureForecast.temp.day}&#176;C</Text>
+            <Text style={styles.temperature}>{futureForecast.weather[0].description}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    image: {
+    icons: {
         width: 100,
         height:100
     }, 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontWeight: "200",
         marginBottom: 15
     },   
-    temp: {
+    temperature: {
         fontSize: 14,
         color:"white",
         fontWeight:"100",

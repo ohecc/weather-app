@@ -1,27 +1,28 @@
 import React from 'react'
-import { View, ScrollView, Image, Text, StyleSheet } from 'react-native'
+import { View, ScrollView, Image, Text, StyleSheet, Dimensions } from 'react-native'
 import moment from 'moment-timezone'
 import ForecastPredict from './ForecastPredict'
 
-const ScrollingWeather = ({weatherData}) => {
+
+const ScrollingWeather = ({weatherInfo}) => {
   return (
     <ScrollView horizontal={true} style={styles.scrollView}>
-        <CurrentTempEl data={weatherData && weatherData.length > 0 ? weatherData[0] : {}}/>
-        <ForecastPredict data={weatherData} />
+        <PresentTemp data={weatherInfo && weatherInfo.length > 0 ? weatherInfo[0] : {}}/>
+        <ForecastPredict data={weatherInfo} />
     </ScrollView>
   )
 }
 
-const CurrentTempEl = ({data}) => {
+const PresentTemp = ({data}) => {
     if(data && data.weather){
         const img = {uri: 'http://openweathermap.org/img/wn/'+ data.weather[0].icon +'@4x.png'}
         return(
-            <View style={styles.currentTempContainer}>
-                <Image source={img} style={styles.image} />
-                <View style={styles.otherContainer}>
+            <View style={styles.presentTemperature}>
+                <Image source={img} style={styles.icons} />
+                <View style={styles.infoContainer}>
                     <Text style={styles.day}>{moment(data.dt * 1000).format('dddd')}</Text>
-                    <Text style={styles.temp}>Night - {data.temp.night}&#176;C</Text>
-                    <Text style={styles.temp}>Day - {data.temp.day}&#176;C</Text>
+                    <Text style={styles.temperature}>Night : {data.temp.night}&#176;C</Text>
+                    <Text style={styles.temperature}>Day : {data.temp.day}&#176;C</Text>
                 </View>
             </View>
         )
@@ -38,24 +39,25 @@ const CurrentTempEl = ({data}) => {
 }
 
 const styles = StyleSheet.create({
-    image: {
+    icons: {
         width: 150,
         height: 150
     },
     scrollView: {
         flex:0.4,
-        backgroundColor: '#18181bcc',
-        padding:30
+        padding:30,
+
     },
-    currentTempContainer: {
+    presentTemperature: {
         flexDirection: 'row',
-        backgroundColor: '#00000033',
+        backgroundColor: '#18181bcc',
         justifyContent:"center",
         alignItems:'center',
         borderRadius: 10,
         borderColor:'#eee',
         borderWidth:1,
-        padding: 40
+        padding: 1
+        
     },
     day: {
         fontSize: 20,
@@ -67,13 +69,13 @@ const styles = StyleSheet.create({
         fontWeight: "200",
         marginBottom: 15
     },
-    temp: {
+    temperature: {
         fontSize: 16,
         color:"white",
         fontWeight:"100",
         textAlign:"center"
     },
-    otherContainer: {
+    infoContainer: {
         paddingRight:10
     }
 })

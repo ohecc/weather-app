@@ -6,11 +6,11 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
-const WeatherItem = ({title, value, units}) => {
+const DetailsForWeather = ({title, value, metric}) => {
   return (
-    <View style={styles.weatherItem}>
-        <Text style={styles.weatherItemTitle}>{title}</Text>
-        <Text style={styles.weatherItemTitle}>{value}{units}</Text>
+    <View style={styles.weatherDetailFlex}>
+        <Text style={styles.weatherDetails}>{title}</Text>
+        <Text style={styles.weatherDetails}>{value}{metric}</Text>
     </View>
   )
 }
@@ -37,24 +37,27 @@ const DateTime = ({current, lat, lon, timezone}) => {
   }, 1000);
   }, [])
   return (
+
     <View style={styles.container}>
       <View>
-        <View>
-            <Text style={styles.heading}>{time}</Text>
+        <View style={styles.infoContainer}>
+          <View>
+              <Text style={styles.currenTime}>{time}</Text>
+          </View>
+          <View>
+              <Text style={styles.currentDate}>{date}</Text>
+          </View>
+          <View>
+              <Text style={styles.timezone}>{timezone}</Text>
+              <Text style={styles.latlong}>{lat}N, {lon}E</Text>
+          </View>
         </View>
-        <View>
-            <Text style={styles.subheading}>{date}</Text>
-        </View>
-        <View style={styles.weatherItemContainer}>
-          <WeatherItem title="Humidity" value={current? current.humidity : ""} units=" %"/>
-          <WeatherItem title="Pressure" value={current? current.pressure : ""} units=" hpa"/>
-          <WeatherItem title="Sunrise" value={current? moment.tz(current.sunrise * 1000, timezone ).format('HH:mm'): ""} units=" am"/>
-          <WeatherItem title="Sunset" value={current? moment.tz(current.sunset * 1000, timezone ).format('HH:mm') : ""} units=" pm"/>
+        <View style={styles.weatherDetailContainer}>
+          <DetailsForWeather title="Humidity" value={current? current.humidity : ""} metric=" %"/>
+          <DetailsForWeather title="Pressure" value={current? current.pressure : ""} metric=" hpa"/>
+          <DetailsForWeather title="Sunrise" value={current? moment.tz(current.sunrise * 1000, timezone ).format('HH:mm'): ""} metric=" am"/>
+          <DetailsForWeather title="Sunset" value={current? moment.tz(current.sunset * 1000, timezone ).format('HH:mm') : ""} metric=" pm"/>
         </View> 
-      </View>
-      <View style={styles.rightAlign}>
-        <Text style={styles.timezone}>{timezone}</Text>
-        <Text style={styles.latlong}>{lat}N, {lon}E</Text>
       </View>
     </View>
   )
@@ -64,44 +67,60 @@ const styles = StyleSheet.create({
     container: {
         flex:1.5,
         flexDirection:"row",
-        justifyContent:'space-between',
-        padding: 20
+        justifyContent:'center',
+        padding: 100,
+        alignItems: 'center',
     },
-    heading: {
+
+    infoContainer: {
+        padding: 10,
+        marginTop: 5
+    },
+
+    currenTime: {
         fontSize: 45,
         color:'white',
         fontWeight: '100',
-        marginTop: 30
-    },
-    subheading: {
-        fontSize: 25,
-        color: '#eee',
-        fontWeight: '300'
-    },
-    rightAlign: {
-        textAlign:'right',
-        marginTop: 42,
-    },
-    timezone: {
-        fontSize: 20,
-        color:'white',
-    },
-    latlong:{
-        fontSize:15,
-        color:'white',
-        fontWeight: '200'
-    },
-    weatherItemContainer: {
-        backgroundColor: "#18181b99",
-        borderRadius: 10,
-        padding: 10,
-        marginTop: 35
-    }, 
-    weatherItem: {
+        alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    weatherItemTitle: {
+    currentDate: {
+        fontSize: 25,
+        color: '#eee',
+        fontWeight: '300',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+    },
+
+    timezone: {
+        fontSize: 20,
+        color:'white',
+        fontWeight: '100',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    latlong:{
+        fontSize: 20,
+        color:'white',
+        fontWeight: '100',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+    },
+    weatherDetailContainer: {
+        backgroundColor: "#18181b99",
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 10
+    }, 
+    weatherDetailFlex: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    weatherDetails: {
         color:'#eee',
         fontSize: 14,
         fontWeight: '100'
