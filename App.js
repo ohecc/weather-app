@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import DateTime from './functions/DateTime';
 import ScrollingWeather from './functions/ScrollingWeather';
 
-const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
+const API_KEY ='a99b297f1dc3a9f9939f43ba7f148272';
 const bg = require('./assets/bg.png')
 
 export default function App() {
@@ -14,16 +14,16 @@ export default function App() {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        fetchDataFromApi("37.775", "-122.419")
+        getWeatherInfo("37.775", "-122.419")
         return;
       }
       let location = await Location.getCurrentPositionAsync({});
-      fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+      getWeatherInfo(location.coords.latitude, location.coords.longitude);
     })();
     
   }, [])
 
-  const fetchDataFromApi = (latitude, longitude) => {
+  const getWeatherInfo = (latitude, longitude) => {
     if(latitude && longitude) {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
 
@@ -34,9 +34,9 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
-      <ImageBackground source={bg} style={styles.image}>
+      <ImageBackground source={bg} style={styles.picture}>
         <DateTime current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon}/>
-        <ScrollingWeather weatherData={data.daily}/>
+        <ScrollingWeather weatherInfo={data.daily}/>
       </ImageBackground>        
     </View>  
   )
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
+  picture: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center"
