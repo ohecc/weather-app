@@ -17,4 +17,5 @@ Unzip the folder and then install the following:
 ### FAQ
 
 To see on Expo Snack, press this link (https://snack.expo.dev/@le0v0/my-weather-app)
+
 If the application does not work, please allow the application to have access to your location or refresh your phone.
