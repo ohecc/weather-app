@@ -4,7 +4,7 @@ import * as Location from 'expo-location';
 import DateTime from './functions/DateTime';
 import ScrollingWeather from './functions/ScrollingWeather';
 
-const API_KEY ='a99b297f1dc3a9f9939f43ba7f148272';
+const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
 const bg = require('./assets/bg.png')
 
 export default function App() {
