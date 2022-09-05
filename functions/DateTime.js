@@ -22,17 +22,17 @@ const DateTime = ({current, lat, lon, timezone}) => {
   useEffect (() => {
     setInterval(() => {
       const time = new Date();
-      const month = time.getMonth();
+      const amOrPm = hour >=12 ? 'pm' : 'am'
+      const mth = time.getMonth();
       const date = time.getDate();
       const day = time.getDay();
       const hour = time.getHours();
-      const hoursIn12HrFormat = hour >= 13 ? hour %12: hour
-      const minutes = time.getMinutes();
-      const ampm = hour >=12 ? 'pm' : 'am'
+      const hoursOfClock = hour >= 13 ? hour %12: hour
+      const min = time.getMinutes();
   
-      setTime((hoursIn12HrFormat < 10? '0'+hoursIn12HrFormat : hoursIn12HrFormat) + ':' + (minutes < 10? '0'+minutes: minutes) +ampm) 
+      setTime((hoursOfClock < 10? '0'+hoursOfClock : hoursOfClock) + ':' + (min < 10? '0'+min: min) +amOrPm) 
   
-      setDate(days[day] + ', ' + date+ ' ' + months[month]) 
+      setDate(days[day] + ', ' + date+ ' ' + months[mth]) 
   
   }, 1000);
   }, [])
