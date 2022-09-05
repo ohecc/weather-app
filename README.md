@@ -11,7 +11,7 @@ This is a simple weather app that gets you the weather forecasts for today and t
 Unzip the folder and then install the following:
 * npm i moment-timezone
 * expo install expo-location
-
+* expo install expo-notifications
 ***
 
 ### FAQ
